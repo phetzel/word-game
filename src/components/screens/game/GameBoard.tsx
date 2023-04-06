@@ -1,9 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
+import {GridItemType} from '../../../types/gameTypes';
+
 export type Props = {
   handleLettterPress: (letter: string) => void;
-  letters: string[][];
+  letters: GridItemType[][];
 };
 
 const GameBoard = ({handleLettterPress, letters}: Props) => {
@@ -15,8 +17,8 @@ const GameBoard = ({handleLettterPress, letters}: Props) => {
             <TouchableOpacity
               key={`grid-item-${idx1}-${idx2}`}
               style={styles.button}
-              onPress={() => handleLettterPress(letter)}>
-              <Text style={styles.buttonText}>{letter}</Text>
+              onPress={() => handleLettterPress(letter.value)}>
+              <Text style={styles.buttonText}>{letter.value}</Text>
             </TouchableOpacity>
           ))}
         </View>
