@@ -35,10 +35,10 @@ const handleFormatGridItems = (letters: string[]): GridItemType[][] => {
     const letter = shuffled.shift()!;
     //   Format letter for game
     const formattedLetter: GridItemType = {
-      // index: {
-      //   x: i,
-      //   y: result[i].length,
-      // },
+      index: {
+        x: i,
+        y: result[i].length,
+      },
       status: 'open',
       value: letter,
     };

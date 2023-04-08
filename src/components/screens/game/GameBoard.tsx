@@ -4,11 +4,23 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GridItemType} from '../../../types/gameTypes';
 
 export type Props = {
-  handleLettterPress: (letter: string) => void;
+  handleLetterPress: (letter: GridItemType) => void;
   letters: GridItemType[][];
 };
 
-const GameBoard = ({handleLettterPress, letters}: Props) => {
+const GameBoard = ({handleLetterPress, letters}: Props) => {
+  const renderButtonStyle = (letter: GridItemType) => {
+    let buttonStyle: any = styles.button;
+
+    if (letter.status === 'selected') {
+      buttonStyle = {...buttonStyle, ...styles.buttonSelected};
+    } else if (letter.status === 'correct') {
+      buttonStyle = {...buttonStyle, ...styles.buttonSuccess};
+    }
+
+    return buttonStyle;
+  };
+
   return (
     <View style={styles.container}>
       {letters.map((row, idx1) => (
@@ -16,8 +28,9 @@ const GameBoard = ({handleLettterPress, letters}: Props) => {
           {row.map((letter, idx2) => (
             <TouchableOpacity
               key={`grid-item-${idx1}-${idx2}`}
-              style={styles.button}
-              onPress={() => handleLettterPress(letter.value)}>
+              style={renderButtonStyle(letter)}
+              onPress={() => handleLetterPress(letter)}
+              disabled={letter.status !== 'open'}>
               <Text style={styles.buttonText}>{letter.value}</Text>
             </TouchableOpacity>
           ))}
@@ -43,6 +56,12 @@ const styles = StyleSheet.create({
     margin: 5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonSelected: {
+    backgroundColor: 'blue',
+  },
+  buttonSuccess: {
+    backgroundColor: 'green',
   },
   buttonText: {
     fontSize: 24,
